@@ -23,6 +23,11 @@ The Nautilus Bybit options tutorials are captured in `docs/bybit-options-path.md
 
 Because Bybit may not be available for US users, the likely US-compatible options path is Interactive Brokers. Notes are captured in `docs/interactive-brokers-options-path.md`. The current venv has `nautilus_trader[ib,docker]` installed, but v1 remains read-only data + internal paper simulation; no IB order submission path is enabled.
 
+## Reference backlog and quant roadmap
+
+- Starred repo review backlog: `docs/reference-repo-backlog.md`
+- Markov/HMM/dynamic-hedging roadmap: `docs/quant-math-roadmap.md`
+
 ## Local commands
 
 ```bash
