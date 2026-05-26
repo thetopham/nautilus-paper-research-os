@@ -1,0 +1,10 @@
+paper:
+  starting_cash: 100000
+  max_position_notional: 5000
+  max_total_exposure: 15000
+  max_daily_drawdown: 1000
+  max_orders_per_hour: 20
+  max_open_positions: 5
+  stale_feed_seconds: 30
+  allow_short: false
+  allow_leverage: false
