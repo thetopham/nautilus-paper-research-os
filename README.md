@@ -27,6 +27,7 @@ Because Bybit may not be available for US users, the likely US-compatible option
 
 - Starred repo review backlog: `docs/reference-repo-backlog.md`
 - Markov/HMM/dynamic-hedging roadmap: `docs/quant-math-roadmap.md`
+- Options history and mispricing scanner roadmap: `docs/options-data-and-mispricing-research.md`
 
 ## Local commands
 
