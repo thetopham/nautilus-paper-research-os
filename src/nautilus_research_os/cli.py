@@ -7,6 +7,7 @@ from pathlib import Path
 from nautilus_trader.model.objects import Price, Quantity
 
 from .ledger import SQLiteLedger
+from .replay import generate_baseline_candidates, load_candidates_csv, replay_candidates, write_result_json
 
 DEFAULT_PAPER_CONFIG = {
     "paper": {
@@ -86,9 +87,19 @@ def main(argv: list[str] | None = None) -> int:
     smoke = subparsers.add_parser("smoke-paper", help="Write one internal paper session/order/fill/position to the local ledger.")
     smoke.add_argument("--db", default=".local/ledger.sqlite3", help="SQLite ledger path for local development.")
 
+    replay = subparsers.add_parser("replay-r", help="Replay R-multiple candidates with daily paper-risk gates.")
+    replay.add_argument("--input-csv", help="CSV with ts,r_multiple,setup columns. If omitted, uses the baseline fixture.")
+    replay.add_argument("--output-json", default="runs/basic-r-replay/result.json", help="Where to write replay JSON output.")
+
     args = parser.parse_args(argv)
     if args.command == "smoke-paper":
         print(json.dumps(smoke_paper(args.db), indent=2, sort_keys=True))
+        return 0
+    if args.command == "replay-r":
+        candidates = load_candidates_csv(args.input_csv) if args.input_csv else generate_baseline_candidates()
+        result = replay_candidates(candidates)
+        write_result_json(result, args.output_json)
+        print(json.dumps({"output_json": str(Path(args.output_json).resolve()), "metrics": result.to_dict()["metrics"]}, indent=2, sort_keys=True))
         return 0
     raise AssertionError(f"Unhandled command {args.command}")
 

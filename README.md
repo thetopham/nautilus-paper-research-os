@@ -29,5 +29,33 @@ Because Bybit may not be available for US users, the likely US-compatible option
 source /home/matt/venvs/nautilus-perspective/bin/activate
 pip install -e '.[dev]'
 npro smoke-paper --db ./.local/ledger.sqlite3
+npro replay-r --output-json ./.local/basic-r-replay.json
 pytest -q
+```
+
+## Basic R-multiple replay
+
+`npro replay-r` applies the baseline daily execution rules:
+
+- 1R / 1% risk unit per executed trade;
+- two trades per day max;
+- one win and done for the day;
+- one loss allows one additional trade.
+
+With no input CSV, it uses a deterministic acceptance fixture approximating the supplied benchmark:
+
+```text
++186.85R total
+231 trades
+60.17% win rate
+2.0R average winner
+3.0499 profit factor
+6.0056 Sharpe
+4 max consecutive losses
+```
+
+For real strategy data, pass a CSV with `ts,r_multiple,setup` columns:
+
+```bash
+npro replay-r --input-csv ./path/to/candidates.csv --output-json ./.local/result.json
 ```
